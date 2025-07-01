@@ -16,6 +16,7 @@ class UserPendidikan extends Model
         'username',
         'pass',
         'peran',
+        'tanggal_dibuat',
         'id_guru',
         'id_siswa'
     ];
