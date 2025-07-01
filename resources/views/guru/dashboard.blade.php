@@ -151,7 +151,7 @@
                                         </div>
                                         <div>
                                             <p class="mb-0 data-label">Tanggal Terdaftar</p>
-                                            <p class="text-muted mb-0">15 Januari 2023</p>
+                                            <p class="text-muted mb-0">$tanggalTerdaftar</p>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center mb-3">
@@ -160,7 +160,7 @@
                                         </div>
                                         <div>
                                             <p class="mb-0 data-label">Waktu Terdaftar</p>
-                                            <p class="text-muted mb-0">17:17:08</p>
+                                            <p class="text-muted mb-0">$waktuTerdaftar</p>
                                         </div>
                                     </div>
                                 </div>
