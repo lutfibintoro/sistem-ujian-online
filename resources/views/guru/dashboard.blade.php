@@ -67,7 +67,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/">
                                 <i class="fas fa-sign-out-alt me-2"></i> Logout
                             </a>
                         </li>
@@ -84,7 +84,7 @@
                         </button>
                         <a class="navbar-brand" href="#">Dashboard</a>
                         <div class="d-flex align-items-center">
-                            <span class="me-3 d-none d-sm-block">Selamat datang, <strong>$username</strong></span>
+                            <span class="me-3 d-none d-sm-block">Selamat datang, <strong>{{$username}}</strong></span>
                         </div>
                     </div>
                 </nav>
@@ -101,11 +101,11 @@
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <p class="data-label">Username</p>
-                                            <p class="text-muted">$username</p>
+                                            <p class="text-muted">{{$username}}</p>
                                         </div>
                                         <div class="col-md-6">
                                             <p class="data-label">Password</p>
-                                            <p class="text-muted">$pass</p>
+                                            <p class="text-muted">{{$pass}}</p>
                                         </div>
                                     </div>
                                     
@@ -113,23 +113,23 @@
                                         <div class="col-md-6">
                                             <p class="data-label">Peran</p>
                                             <p class="text-muted">
-                                                <span class="badge bg-success">$peran</span>
+                                                <span class="badge bg-success">{{$peran}}</span>
                                             </p>
                                         </div>
                                         <div class="col-md-6">
                                             <p class="data-label">Nama Lengkap</p>
-                                            <p class="text-muted">$nama</p>
+                                            <p class="text-muted">{{$nama}}</p>
                                         </div>
                                     </div>
                                     
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="data-label">Kontak</p>
-                                            <p class="text-muted">$kontak</p>
+                                            <p class="text-muted">{{$kontak}}</p>
                                         </div>
                                         <div class="col-md-6">
                                             <p class="data-label">Email</p>
-                                            <p class="text-muted">$email</p>
+                                            <p class="text-muted">{{$email}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -151,7 +151,7 @@
                                         </div>
                                         <div>
                                             <p class="mb-0 data-label">Tanggal Terdaftar</p>
-                                            <p class="text-muted mb-0">$tanggalTerdaftar</p>
+                                            <p class="text-muted mb-0">{{$tanggalTerdaftar}}</p>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center mb-3">
@@ -160,7 +160,7 @@
                                         </div>
                                         <div>
                                             <p class="mb-0 data-label">Waktu Terdaftar</p>
-                                            <p class="text-muted mb-0">$waktuTerdaftar</p>
+                                            <p class="text-muted mb-0">{{$waktuTerdaftar}}</p>
                                         </div>
                                     </div>
                                 </div>
