@@ -11,6 +11,7 @@ class Pengerjaan extends Model
 
     protected $table = 'pengerjaan';
     protected $primaryKey = 'id_pengerjaan';
+    public $timestamps = false;
     protected $fillable = [
         'id_pengerjaan',
         'jawaban',

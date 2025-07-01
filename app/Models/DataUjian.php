@@ -11,6 +11,7 @@ class DataUjian extends Model
 
     protected $table = 'data_ujian';
     protected $primaryKey = 'id_data_ujian';
+    public $timestamps = false;
     protected $fillable = [
         'id_data_ujian',
         'nama_ujian',

@@ -11,6 +11,7 @@ class Siswa extends Model
 
     protected $table = 'siswa';
     protected $primaryKey = 'id_siswa';
+    public $timestamps = false;
     protected $fillable = [
         'id_siswa',
         'nama',

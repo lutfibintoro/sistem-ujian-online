@@ -11,6 +11,7 @@ class UserPendidikan extends Model
 
     protected $table = 'user_pendidikan';
     protected $primaryKey = 'id_user_pendidikan';
+    public $timestamps = false;
     protected $fillable = [
         'id_user_pendidikan',
         'username',
