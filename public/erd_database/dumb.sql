@@ -47,6 +47,7 @@ CREATE TABLE user_pendidikan (
   username varchar(60) unique NOT NULL,
   pass varchar(60) NOT NULL,
   peran enum('siswa','guru') NOT NULL DEFAULT 'siswa',
+  tanggal_dibuat datetime DEFAULT current_timestamp(),
   id_guru int(11) DEFAULT NULL,
   id_siswa int(11) DEFAULT NULL,
 
