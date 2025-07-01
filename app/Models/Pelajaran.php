@@ -13,7 +13,6 @@ class Pelajaran extends Model
     protected $primaryKey = 'id_pelajaran';
     public $timestamps = false;
     protected $fillable = [
-        'id_pelajaran',
         'nama_pelajaran'
     ];
 }

@@ -13,7 +13,6 @@ class Guru extends Model
     protected $primaryKey = 'id_guru';
     public $timestamps = false;
     protected $fillable = [
-        'id_guru',
         'nama',
         'kontak',
         'email'

@@ -13,7 +13,6 @@ class Pengerjaan extends Model
     protected $primaryKey = 'id_pengerjaan';
     public $timestamps = false;
     protected $fillable = [
-        'id_pengerjaan',
         'jawaban',
         'waktu_mulai',
         'id_soal_ujian',

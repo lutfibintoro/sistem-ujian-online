@@ -13,7 +13,6 @@ class SoalUjian extends Model
     protected $primaryKey = 'id_soal_ujian';
     public $timestamps = false;
     protected $fillable = [
-        'id_soal_ujian',
         'pertanyaan',
         'jawaban',
         'id_guru',
