@@ -92,7 +92,7 @@
                                 
                                 <div class="mb-3">
                                     <label for="kontak" class="form-label">Kontak</label>
-                                    <input name="kontak" type="tel" class="form-control" id="kontak" placeholder="Nomor telepon/WA">
+                                    <input name="kontak" type="tel" class="form-control" id="kontak" placeholder="Nomor telepon/WA" required>
                                 </div>
                                 
                                 <div class="mb-3">
