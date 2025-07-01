@@ -15,3 +15,4 @@ Route::get('/sign-in/{alert_status}/{username}', [RegishController::class, 'sign
 
 
 // route untuk melakukan sign-in
+Route::post('/sign-in', [RegishController::class, 'signIn']);
