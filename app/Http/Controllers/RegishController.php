@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\DataUjian;
 use App\Models\Guru;
@@ -85,11 +87,27 @@ class RegishController extends Controller
 
         } catch (QueryException $th) {
             DB::rollBack();
-            return view('registrasi.signUp',
-            [
-                'alert_status' => 'Error'.'! ',
-                'username' => 'duplikat username '.$akunData['username']
-            ]);
+
+            $errorCode = $th->errorInfo[1];
+
+            if ($errorCode == 1062) {
+                return view('registrasi.signUp', [
+                    'alert_status' => 'Error! ',
+                    'username' => 'duplikat username '.$akunData['username']
+                ]);
+
+            } elseif ($errorCode == 1406) {
+                return view('registrasi.signUp', [
+                    'alert_status' => 'Error! ',
+                    'username' => 'Data terlalu panjang. Periksa input dan coba lagi.'
+                ]);
+
+            } else {
+                return view('registrasi.signUp', [
+                    'alert_status' => 'Error! ',
+                    'username' => 'Kesalahan sistem: ' . $errorMessage
+                ]);
+            }
         }
 
     }
@@ -120,5 +138,62 @@ class RegishController extends Controller
     /**
      * logic untuk masuk ke dashbord siswa / guru setelah melakukan sign-in
      */
-    public function signIn(Request $request) {}
+    public function signIn(Request $request) {
+        $data = $request->all();
+        try {
+            $userPendidikan = UserPendidikan::where('username', $data['username'])->where('pass', $data['pass'])->firstOrFail();
+            return redirect('/dashboard'.'/'.$data['username'].'/'.urlencode($data['pass']));
+
+        } catch (ModelNotFoundException $th) {
+            return redirect('/sign-in/Error'.'/'.$data['username']);
+        }
+    }
+
+
+    /**
+     * return halaman dashboard beserta semua data yang diperlukan
+     */
+    public function dashboard($username, $pass) {
+        try {
+            $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+            
+            if ($userPendidikan->peran == 'guru') {
+                $dataPribadi = Guru::where('id_guru', $userPendidikan->id_guru)->firstOrFail();
+
+                return view('guru.dashboard',
+                [
+                    'username' => $userPendidikan->username,
+                    'pass' => $userPendidikan->pass,
+                    'peran' => $userPendidikan->peran,
+                    'nama' => $dataPribadi->nama,
+                    'kontak' => $dataPribadi->kontak,
+                    'email' => $dataPribadi->email,
+                    'tanggalTerdaftar' => Carbon::parse($userPendidikan->tanggal_dibuat)->toDateString(),
+                    'waktuTerdaftar' => Carbon::parse($userPendidikan->tanggal_dibuat)->format('H:i:s')
+                ]);
+
+            } else if ($userPendidikan->peran == 'siswa') {
+                $dataPribadi = Siswa::where('id_siswa', $userPendidikan->id_siswa)->firstOrFail();
+
+                return view('murid.dashboard',
+                [
+                    'username' => $userPendidikan->username,
+                    'pass' => $userPendidikan->pass,
+                    'peran' => $userPendidikan->peran,
+                    'nama' => $dataPribadi->nama,
+                    'kontak' => $dataPribadi->kontak,
+                    'email' => $dataPribadi->email,
+                    'tanggalTerdaftar' => Carbon::parse($userPendidikan->tanggal_dibuat)->toDateString(),
+                    'waktuTerdaftar' => Carbon::parse($userPendidikan->tanggal_dibuat)->format('H:i:s')
+                ]);
+            } else {
+                echo "sisi";
+                throw new QueryException();
+            }
+            
+            
+        } catch (ModelNotFoundException $th) {
+            return redirect('/sign-in/Error'.'/'.$username);
+        }
+    }
 }
