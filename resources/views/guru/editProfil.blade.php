@@ -113,7 +113,7 @@
                                         <div class="col-md-6">
                                             <p class="data-label">Peran</p>
                                             <p class="text-muted">
-                                                <span class="badge bg-success">{{$peran}}</span>
+                                                <span class="badge bg-primary">{{$peran}}</span>
                                             </p>
                                         </div>
                                         <div class="col-md-6">
