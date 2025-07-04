@@ -47,7 +47,7 @@
                     <hr>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/dashboard/{{$username}}/{{$pass}}">
                                 <i class="fas fa-home me-2"></i> Dashboard
                             </a>
                         </li>
@@ -105,19 +105,19 @@
                                         <h5 class="mb-3 text-success" style="color: #A0C878;">Informasi Akun</h5>
                                         <div class="mb-3">
                                             <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" id="username" value="{{$username}}" required>
+                                            <input name="username" type="text" class="form-control" id="username" value="{{$username}}" required>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="password" class="form-label">Password</label>
                                             <div class="input-group">
-                                                <input type="password" class="form-control" id="password" placeholder="Masukkan password baru" value="{{$pass}}" required>
+                                                <input name="pass" type="text" class="form-control" id="password" placeholder="Masukkan password baru" value="{{$pass}}" required>
                                             </div>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="role" class="form-label">Peran</label>
-                                            <select class="form-select" id="role" disabled>
+                                            <select name="peran" class="form-select" id="role" disabled>
                                                 <option value="murid" selected>Murid</option>
                                                 <option value="guru">Guru</option>
                                             </select>
@@ -130,17 +130,17 @@
                                         <h5 class="mb-3 text-success" style="color: #A0C878;">Data Pribadi</h5>
                                         <div class="mb-3">
                                             <label for="fullName" class="form-label">Nama Lengkap</label>
-                                            <input type="text" class="form-control" id="fullName" value="{{$nama}}" required>
+                                            <input name="nama" type="text" class="form-control" id="fullName" value="{{$nama}}" required>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="contact" class="form-label">Kontak</label>
-                                            <input type="tel" class="form-control" id="contact" value="{{$kontak}}" required>
+                                            <input name="kontak" type="tel" class="form-control" id="contact" value="{{$kontak}}" required>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="email" value="{{$$email}}" required>
+                                            <input name="email" type="email" class="form-control" id="email" value="{{$email}}" required>
                                         </div>
                                         
                                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
