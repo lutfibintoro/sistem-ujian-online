@@ -117,9 +117,8 @@
                                         
                                         <div class="mb-3">
                                             <label for="role" class="form-label">Peran</label>
-                                            <select name="peran" class="form-select" id="role" disabled>
+                                            <select name="peran" class="form-select" id="role">
                                                 <option value="murid" selected>Murid</option>
-                                                <option value="guru">Guru</option>
                                             </select>
                                             <small class="text-muted">Peran tidak dapat diubah</small>
                                         </div>

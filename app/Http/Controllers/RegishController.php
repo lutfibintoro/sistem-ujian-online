@@ -50,6 +50,7 @@ class RegishController extends Controller
             ]);
 
             if ($validUser->fails()) {
+                DB::rollBack();
                 return view('registrasi.signUp',
                 [
                     'alert_status' => 'Error'.'! ',
@@ -58,6 +59,7 @@ class RegishController extends Controller
             }
 
             if ($validPass->fails()) {
+                DB::rollBack();
                 return view('registrasi.signUp',
                 [
                     'alert_status' => 'Error'.'! ',
@@ -172,7 +174,7 @@ class RegishController extends Controller
                     'waktuTerdaftar' => Carbon::parse($userPendidikan->tanggal_dibuat)->format('H:i:s')
                 ]);
 
-            } else if ($userPendidikan->peran == 'siswa') {
+            } elseif ($userPendidikan->peran == 'siswa') {
                 $dataPribadi = Siswa::where('id_siswa', $userPendidikan->id_siswa)->firstOrFail();
 
                 return view('murid.dashboard',
@@ -187,13 +189,144 @@ class RegishController extends Controller
                     'waktuTerdaftar' => Carbon::parse($userPendidikan->tanggal_dibuat)->format('H:i:s')
                 ]);
             } else {
-                echo "sisi";
                 throw new QueryException();
             }
             
             
         } catch (ModelNotFoundException $th) {
             return redirect('/sign-in/Error'.'/'.$username);
+        }
+    }
+
+
+    /**
+     * logic untuk masuk halaman edit profil serta logic untuk update edit data
+     */
+    public function profil(Request $request, $username, $pass) {
+        try {
+            if ($request->isMethod('put')) {
+                DB::beginTransaction();
+                $akunData = $request->only(['username', 'pass', 'peran']);
+                $pribadiData = $request->only(['nama', 'kontak', 'email']);
+
+                $validUser = Validator::make($akunData, [
+                    'username' => [
+                        'required',
+                        'regex:/^[a-z0-9_]+$/'
+                    ]
+                ]);
+
+                $validPass = Validator::make($akunData, [
+                    'pass' => [
+                        'required',
+                        'regex:/^\S+$/'
+                    ]
+                ]);
+
+                if ($validUser->fails()) {
+                    DB::rollBack();
+                    return view('registrasi.signUp',
+                    [
+                        'alert_status' => 'Error'.'! ',
+                        'username' => 'gagal update, username mengandung karakter yang tidak valid, username hanya mendukung [a-z 0-9 _]'
+                    ]);
+                }
+
+                if ($validPass->fails()) {
+                    DB::rollBack();
+                    return view('registrasi.signUp',
+                    [
+                        'alert_status' => 'Error'.'! ',
+                        'username' => 'gagal update, password mengandung karakter yang tidak valid, password tidak boleh berisi spasi'
+                    ]);
+                }
+
+
+                $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+                if ($akunData['peran'] == 'guru') {
+                    $userPendidikan->username = $akunData['username'];
+                    $userPendidikan->pass = $akunData['pass'];
+
+                    $guru = Guru::where('id_guru', $userPendidikan->id_guru)->firstOrFail();
+                    $guru->nama = $pribadiData['nama'];
+                    $guru->kontak = $pribadiData['kontak'];
+                    $guru->email = $pribadiData['email'];
+
+                    $guru->save();
+                    $userPendidikan->save();
+
+                } else {
+                    $userPendidikan->username = $akunData['username'];
+                    $userPendidikan->pass = $akunData['pass'];
+
+                    $siswa = Siswa::where('id_siswa', $userPendidikan->id_siswa)->firstOrFail();
+                    $siswa->nama = $pribadiData['nama'];
+                    $siswa->kontak = $pribadiData['kontak'];
+                    $siswa->email = $pribadiData['email'];
+
+                    $siswa->save();
+                    $userPendidikan->save();
+        
+                }
+                DB::commit();
+                return redirect('/profil'.'/'.$akunData['username'].'/'.$akunData['pass']);
+            }
+
+
+            // jika http method get kode ini yang akan jalan dan mengembalikan halaman edit profil
+            $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+            if ($userPendidikan->peran == 'guru') {
+                $dataPribadi = Guru::where('id_guru', $userPendidikan->id_guru)->firstOrFail();
+
+                return view('guru.editProfil',
+                [
+                    'username' => $userPendidikan->username,
+                    'pass' => $userPendidikan->pass,
+                    'peran' => $userPendidikan->peran,
+                    'nama' => $dataPribadi->nama,
+                    'kontak' => $dataPribadi->kontak,
+                    'email' => $dataPribadi->email
+                ]);
+
+            } elseif ($userPendidikan->peran == 'siswa') {
+                $dataPribadi = Siswa::where('id_siswa', $userPendidikan->id_siswa)->firstOrFail();
+
+                return view('murid.editProfil',
+                [
+                    'username' => $userPendidikan->username,
+                    'pass' => $userPendidikan->pass,
+                    'peran' => $userPendidikan->peran,
+                    'nama' => $dataPribadi->nama,
+                    'kontak' => $dataPribadi->kontak,
+                    'email' => $dataPribadi->email
+                ]);
+            } else {
+                throw new QueryException();
+            }
+
+        } catch (QueryException $th) {
+            DB::rollBack();
+
+            $errorCode = $th->errorInfo[1];
+
+            if ($errorCode == 1062) {
+                return view('registrasi.signUp', [
+                    'alert_status' => 'Error! ',
+                    'username' => 'duplikat username '.$akunData['username']
+                ]);
+
+            } elseif ($errorCode == 1406) {
+                return view('registrasi.signUp', [
+                    'alert_status' => 'Error! ',
+                    'username' => 'Data terlalu panjang. Periksa input dan coba lagi.'
+                ]);
+
+            } else {
+                return view('registrasi.signUp', [
+                    'alert_status' => 'Error! ',
+                    'username' => 'Kesalahan sistem: ' . $errorMessage
+                ]);
+            }
         }
     }
 }
