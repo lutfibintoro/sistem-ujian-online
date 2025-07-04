@@ -82,87 +82,73 @@
                         <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <a class="navbar-brand" href="#">Dashboard</a>
+                        <a class="navbar-brand" href="#">Edit Profil</a>
                         <div class="d-flex align-items-center">
-                            <span class="me-3 d-none d-sm-block">Selamat datang, <strong>{{$username}}</strong></span>
+                            <span class="me-3 d-none d-sm-block">Halo, <strong>{{$username}}</strong></span>
                         </div>
                     </div>
                 </nav>
 
                 <div class="container-fluid">
-                    <!-- Data Diri User -->
-                    <div class="row">
+                    <!-- Form Edit Profil -->
+                    <div class="row justify-content-center">
                         <div class="col-lg-8">
-                            <div class="card shadow mb-4 profile-card">
+                            <div class="card shadow profile-form-card">
                                 <div class="card-header bg-white">
-                                    <h5 class="card-title mb-0"><i class="fas fa-user-circle me-2"></i>Data Diri</h5>
+                                    <h4 class="card-title mb-0"><i class="fas fa-user-edit me-2"></i>Edit Profil</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <p class="data-label">Username</p>
-                                            <p class="text-muted">{{$username}}</p>
+                                    <form id="profileForm" method="post" action="/profil/{{$username}}/{{$pass}}/edit">
+                                        @csrf
+                                        @method('PUT')
+                                        <!-- Informasi Akun -->
+                                        <h5 class="mb-3 text-success" style="color: #A0C878;">Informasi Akun</h5>
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" class="form-control" id="username" value="{{$username}}" required>
                                         </div>
-                                        <div class="col-md-6">
-                                            <p class="data-label">Password</p>
-                                            <p class="text-muted">{{$pass}}</p>
+                                        
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Password</label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control" id="password" placeholder="Masukkan password baru" value="{{$pass}}" required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <p class="data-label">Peran</p>
-                                            <p class="text-muted">
-                                                <span class="badge bg-success">{{$peran}}</span>
-                                            </p>
+                                        
+                                        <div class="mb-3">
+                                            <label for="role" class="form-label">Peran</label>
+                                            <select class="form-select" id="role" disabled>
+                                                <option value="murid" selected>Murid</option>
+                                                <option value="guru">Guru</option>
+                                            </select>
+                                            <small class="text-muted">Peran tidak dapat diubah</small>
                                         </div>
-                                        <div class="col-md-6">
-                                            <p class="data-label">Nama Lengkap</p>
-                                            <p class="text-muted">{{$nama}}</p>
+                                        
+                                        <hr class="my-4">
+                                        
+                                        <!-- Data Pribadi -->
+                                        <h5 class="mb-3 text-success" style="color: #A0C878;">Data Pribadi</h5>
+                                        <div class="mb-3">
+                                            <label for="fullName" class="form-label">Nama Lengkap</label>
+                                            <input type="text" class="form-control" id="fullName" value="{{$nama}}" required>
                                         </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p class="data-label">Kontak</p>
-                                            <p class="text-muted">{{$kontak}}</p>
+                                        
+                                        <div class="mb-3">
+                                            <label for="contact" class="form-label">Kontak</label>
+                                            <input type="tel" class="form-control" id="contact" value="{{$kontak}}" required>
                                         </div>
-                                        <div class="col-md-6">
-                                            <p class="data-label">Email</p>
-                                            <p class="text-muted">{{$email}}</p>
+                                        
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" value="{{$$email}}" required>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer bg-white text-end">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Widget waktu terdaftar -->
-                        <div class="col-lg-4">
-                            <div class="card shadow mb-4">
-                                <div class="card-header bg-white">
-                                    <h5 class="card-title mb-0"><i class="fas fa-info-circle me-2"></i>Informasi Akun</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="bg-light rounded p-3 me-3">
-                                            <i class="fas fa-calendar-alt text-success" style="color: #A0C878;"></i>
+                                        
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                            <button type="submit" class="btn btn-success" style="background-color: #A0C878; border-color: #A0C878;">
+                                                <i class="fas fa-save me-1"></i> Simpan Perubahan
+                                            </button>
                                         </div>
-                                        <div>
-                                            <p class="mb-0 data-label">Tanggal Terdaftar</p>
-                                            <p class="text-muted mb-0">{{$tanggalTerdaftar}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="bg-light rounded p-3 me-3">
-                                            <i class="fas fa-solid fa-clock text-success" style="color: #A0C878;"></i>
-                                        </div>
-                                        <div>
-                                            <p class="mb-0 data-label">Waktu Terdaftar</p>
-                                            <p class="text-muted mb-0">{{$waktuTerdaftar}}</p>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

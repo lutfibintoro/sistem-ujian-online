@@ -52,7 +52,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/profil/{{$username}}/{{$pass}}">
                                 <i class="fas fa-user me-2"></i> Edit Profil
                             </a>
                         </li>

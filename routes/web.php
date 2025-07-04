@@ -24,6 +24,6 @@ Route::get('/dashboard/{username}/{pass}', [RegishController::class, 'dashboard'
 
 // route untuk di halaman profil, put untuk edit data, get untuk ambil dan tampilkan data
 Route::get('/profil/{username}/{pass}', [RegishController::class, 'profil']);
-Route::put('profil/{username}/{pass}/edit', [RegishController::class, 'profil']);
+Route::put('/profil/{username}/{pass}/edit', [RegishController::class, 'profil']);
 
 
