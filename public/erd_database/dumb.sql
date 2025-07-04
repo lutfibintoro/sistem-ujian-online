@@ -59,8 +59,18 @@ CREATE TABLE user_pendidikan (
 
 CREATE TABLE soal_ujian (
   id_soal_ujian int(11) NOT NULL AUTO_INCREMENT,
-  pertanyaan varchar(60) DEFAULT NULL,
+  pertanyaan text DEFAULT NULL,
   jawaban enum('1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '1',
+  j1 varchar(500),
+  j2 varchar(500),
+  j3 varchar(500),
+  j4 varchar(500),
+  j5 varchar(500),
+  j6 varchar(500),
+  j7 varchar(500),
+  j8 varchar(500),
+  j9 varchar(500),
+  j10 varchar(500),
   id_guru int(11) NOT NULL,
   id_data_ujian int(11) NOT NULL,
 
