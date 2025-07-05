@@ -47,12 +47,12 @@
                     <hr>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/dashboard/{{$username}}/{{$pass}}">
                                 <i class="fas fa-home me-2"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/profil/{{$username}}/{{$pass}}">
                                 <i class="fas fa-user me-2"></i> Edit Profil
                             </a>
                         </li>
@@ -82,87 +82,82 @@
                         <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <a class="navbar-brand" href="#">Dashboard</a>
+                        <a class="navbar-brand" href="#">Buat Soal Ujian</a>
                         <div class="d-flex align-items-center">
-                            <span class="me-3 d-none d-sm-block">Selamat datang, <strong>{{$username}}</strong></span>
+                            <span class="me-3 d-none d-sm-block">Halo, <strong>{{$username}}</strong></span>
                         </div>
                     </div>
                 </nav>
 
                 <div class="container-fluid">
-                    <!-- Data Diri User -->
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="card shadow mb-4 profile-card">
+                    <!-- Form Buat Soal -->
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <div class="card shadow exam-form-card mb-4">
                                 <div class="card-header bg-white">
-                                    <h5 class="card-title mb-0"><i class="fas fa-user-circle me-2"></i>Data Diri</h5>
+                                    <h4 class="card-title mb-0"><i class="fas fa-edit me-2"></i>Metadata Ujian</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <p class="data-label">Username</p>
-                                            <p class="text-muted">{{$username}}</p>
+                                    <form id="examForm" method="post" action="soal/guru/{{$username}}/{{$pass}}">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="examName" class="form-label">Nama Ujian</label>
+                                                <input name="nama_ujian" type="text" class="form-control" id="examName" required>
+                                            </div>
+                                            
+                                            <div class="col-md-6 mb-3">
+                                                <label for="subject" class="form-label">Pelajaran</label>
+                                                <select name="pelajaran" class="form-select" id="subject" required>
+                                                    <option value="" selected disabled>Pilih Pelajaran</option>
+                                                    @foreach ($pelajarans as $pelajaran)
+                                                        <option value="{{$pelajaran->id_pelajaran}}">{{$pelajaran->nama_pelajaran}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <p class="data-label">Password</p>
-                                            <p class="text-muted">{{$pass}}</p>
+                                        
+                                        <div class="mb-3">
+                                            <label for="examDescription" class="form-label">Penjelasan Ujian</label>
+                                            <textarea name="deskripsi_ujian" class="form-control" id="examDescription" rows="3"></textarea>
                                         </div>
-                                    </div>
-                                    
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <p class="data-label">Peran</p>
-                                            <p class="text-muted">
-                                                <span class="badge bg-primary">{{$peran}}</span>
-                                            </p>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="duration" class="form-label">Durasi Ujian (menit)</label>
+                                                <input name="durasi" type="number" class="form-control" id="duration" min="1" required>
+                                            </div>
+                                            
+                                            <div class="col-md-4 mb-3">
+                                                <label for="openTime" class="form-label">Ujian Dibuka</label>
+                                                <input name="tanggal_ujian_dibuka" type="datetime-local" class="form-control" id="openTime" required>
+                                            </div>
+                                            
+                                            <div class="col-md-4 mb-3">
+                                                <label for="closeTime" class="form-label">Ujian Ditutup</label>
+                                                <input name="tanggal_ujian_ditutup" type="datetime-local" class="form-control" id="closeTime" required>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <p class="data-label">Nama Lengkap</p>
-                                            <p class="text-muted">{{$nama}}</p>
+                                        
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                            <button type="button" class="btn btn-secondary me-md-2" onclick="window.location.href='/soal/guru/{{$username}}/{{$pass}}'">
+                                                <i class="fas fa-times me-1"></i> Batal
+                                            </button>
+                                            <button type="submit" class="btn btn-success" style="background-color: #A0C878; border-color: #A0C878;">
+                                                <i class="fas fa-save me-1"></i> Simpan Metadata
+                                            </button>
                                         </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p class="data-label">Kontak</p>
-                                            <p class="text-muted">{{$kontak}}</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="data-label">Email</p>
-                                            <p class="text-muted">{{$email}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer bg-white text-end">
+                                    </form>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <!-- Widget waktu terdaftar -->
-                        <div class="col-lg-4">
-                            <div class="card shadow mb-4">
+                            
+                            <!-- Bagian untuk menambahkan soal (akan diisi setelah metadata disimpan) -->
+                            <div class="card shadow mb-4" id="questionSection" style="display: none;">
                                 <div class="card-header bg-white">
-                                    <h5 class="card-title mb-0"><i class="fas fa-info-circle me-2"></i>Informasi Akun</h5>
+                                    <h4 class="card-title mb-0"><i class="fas fa-question-circle me-2"></i>Tambah Soal</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="bg-light rounded p-3 me-3">
-                                            <i class="fas fa-calendar-alt text-success" style="color: #A0C878;"></i>
-                                        </div>
-                                        <div>
-                                            <p class="mb-0 data-label">Tanggal Terdaftar</p>
-                                            <p class="text-muted mb-0">{{$tanggalTerdaftar}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="bg-light rounded p-3 me-3">
-                                            <i class="fas fa-solid fa-clock text-success" style="color: #A0C878;"></i>
-                                        </div>
-                                        <div>
-                                            <p class="mb-0 data-label">Waktu Terdaftar</p>
-                                            <p class="text-muted mb-0">{{$waktuTerdaftar}}</p>
-                                        </div>
-                                    </div>
+                                    <p class="text-muted">Silakan tambahkan soal setelah menyimpan metadata ujian</p>
                                 </div>
                             </div>
                         </div>

@@ -57,7 +57,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/soal/guru/{{$username}}/{{$pass}}">
                                 <i class="fas fa-plus-circle me-2"></i> Buat Soal
                             </a>
                         </li>
