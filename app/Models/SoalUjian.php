@@ -15,6 +15,16 @@ class SoalUjian extends Model
     protected $fillable = [
         'pertanyaan',
         'jawaban',
+        'j1',
+        'j2',
+        'j3',
+        'j4',
+        'j5',
+        'j6',
+        'j7',
+        'j8',
+        'j9',
+        'j10',
         'id_guru',
         'id_data_ujian'
     ];
