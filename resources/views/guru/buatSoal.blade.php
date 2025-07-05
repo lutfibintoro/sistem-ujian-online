@@ -98,7 +98,7 @@
                                     <h4 class="card-title mb-0"><i class="fas fa-edit me-2"></i>Metadata Ujian</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form id="examForm" method="post" action="soal/guru/{{$username}}/{{$pass}}">
+                                    <form id="examForm" method="post" action="/soal/guru/{{$username}}/{{$pass}}">
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-6 mb-3">

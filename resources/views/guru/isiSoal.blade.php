@@ -85,7 +85,7 @@
                         </button>
                         <a class="navbar-brand" href="#">Buat Pertanyaan Ujian</a>
                         <div class="d-flex align-items-center">
-                            <span class="me-3 d-none d-sm-block">Halo, <strong>John Doe</strong></span>
+                            <span class="me-3 d-none d-sm-block">Halo, <strong>{{$username}}</strong></span>
                         </div>
                     </div>
                 </nav>
@@ -101,13 +101,12 @@
                         <button type="button" class="btn btn-success" id="addQuestionBtn" style="background-color: #A0C878; border-color: #A0C878;">
                             <i class="fas fa-plus me-1"></i> Tambah Pertanyaan
                         </button>
-                        <a href="" class="btn btn-danger" id="addQuestionBtn">
+                        <a href="/soal/guru/{{$username}}/{{$pass}}" class="btn btn-danger" id="addQuestionBtn">
                             <i class="fas fa-trash me-1"></i> Hapus Semua Perubahan
                         </a>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -122,10 +121,11 @@
                 </button> -->
             </div>
             <div class="card-body">
-                <form class="question-form" method="post" action="">
+                <form class="question-form" method="post" action="/soal/guru/{{$username}}/{{$pass}}/{{$id_data_ujian}}">
+                    @csrf
                     <div class="mb-3">
                         <label class="form-label">Pertanyaan</label>
-                        <textarea class="form-control question-text" rows="3" placeholder="Masukkan pertanyaan" required></textarea>
+                        <textarea name="pertanyaan" class="form-control question-text" rows="3" placeholder="Masukkan pertanyaan" required></textarea>
                     </div>
                     
                     <div class="mb-3">

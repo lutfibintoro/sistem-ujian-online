@@ -29,4 +29,6 @@ Route::put('/profil/{username}/{pass}/edit', [RegishController::class, 'profil']
 
 // route untuk guru membuat soal baru
 Route::get('/soal/guru/{username}/{pass}', [RegishController::class, 'soalNewMeta']);
-Route::post('soal/guru/{username}/{pass}', [RegishController::class, 'soalNew']);
+Route::post('/soal/guru/{username}/{pass}', [RegishController::class, 'soalNew']);
+Route::post('/soal/guru/{username}/{pass}/{id_data_ujian}', [RegishController::class, 'pertanyaanNew']);
+Route::get('/soal/guru/{username}/{pass}/{id_data_ujian}', [RegishController::class, 'pertanyaanDel']);
