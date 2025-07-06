@@ -328,37 +328,34 @@
                         return;
                     }
                     
-                    // Simpan pertanyaan
-                    const questionText = questionElement.querySelector('.question-text').value;
-                    const options = [];
-                    let correctAnswerIndex = -1;
                     
-                    questionElement.querySelectorAll('.option-item').forEach((optionEl, optIndex) => {
-                        const optionText = optionEl.querySelector('.option-text').value;
-                        const isCorrect = optionEl.querySelector('input[type="radio"]').checked;
-                        
-                        options.push({
-                            text: optionText,
-                            isCorrect: isCorrect
+                    const formData = new FormData(questionForm);
+                    fetch(questionForm.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                        },
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Gagal menyimpan pertanyaan');
+                        }
+                        return response.text(); // Bisa diganti .json() jika backend mengembalikan JSON
+                    })
+                    .then(data => {
+                        alert('Pertanyaan berhasil disimpan!');
+                        // Nonaktifkan form setelah disimpan
+                        questionForm.querySelectorAll('input, textarea, button').forEach(el => {
+                            el.disabled = true;
                         });
-                        
-                        if(isCorrect) correctAnswerIndex = optIndex;
+                        // Jika kamu ingin tombol hapus aktif kembali
+                        const removeBtn = questionElement.querySelector('.remove-question-btn');
+                        if (removeBtn) removeBtn.disabled = false;
+                    })
+                    .catch(error => {
+                        alert('Terjadi kesalahan saat menyimpan: ' + error.message);
                     });
-                    
-                    // Di sini Anda bisa mengirim data pertanyaan ke server
-                    console.log('Pertanyaan disimpan:', {
-                        question: questionText,
-                        options: options,
-                        correctAnswerIndex: correctAnswerIndex
-                    });
-                    
-                    alert('Pertanyaan berhasil disimpan!');
-                    
-                    // Nonaktifkan form setelah disimpan
-                    questionForm.querySelectorAll('input, textarea, button').forEach(el => {
-                        el.disabled = true;
-                    });
-                    questionElement.querySelector('.remove-question-btn').disabled = false;
                 });
             }
 
