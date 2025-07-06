@@ -57,12 +57,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link active" href="#">
                                 <i class="fas fa-plus-circle me-2"></i> Buat Soal
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link" href="#">
                                 <i class="fas fa-list me-2"></i> Soal Saya
                             </a>
                         </li>
