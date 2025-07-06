@@ -329,4 +329,35 @@ class RegishController extends Controller
             }
         }
     }
+
+
+    /**
+     * halaman untuk guru membuat data soal ujian
+     */
+    public function soalNewMeta($username, $pass) {
+        $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+
+        if ($userPendidikan->peran == 'guru') {
+            $dataPribadi = Guru::where('id_guru', $userPendidikan->id_guru)->firstOrFail();
+            $pelajarans = Pelajaran::get();
+
+            return view('guru.buatSoal',
+            [
+                'username' => $userPendidikan->username,
+                'pass' => $userPendidikan->pass,
+                'pelajarans' => $pelajarans
+            ]);
+
+        } else {
+            throw new QueryException();
+        }
+    }
+
+
+    /**
+     * simpan data soal yang sudah di buat guru
+     */
+    public function soalNew(Request $request, $username, $pass) {
+
+    }
 }
