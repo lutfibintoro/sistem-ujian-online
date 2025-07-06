@@ -385,6 +385,37 @@ class RegishController extends Controller
 
 
     /**
+     * simpan pertanyaan ke dalam database
+     */
+    public function pertanyaanNew(Request $request, $username, $pass, $id_data_ujian) {
+        $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+        if (!$userPendidikan->peran == 'guru') {
+            throw new QueryException();
+        }
+
+        $newSoalUjian = $request->all();
+        $soalUjian = new SoalUjian();
+        $soalUjian->pertanyaan = $newSoalUjian['pertanyaan'];
+        $soalUjian->jawaban = $newSoalUjian['option'];
+        $soalUjian->j1 = $newSoalUjian['j1'] ?? null;
+        $soalUjian->j2 = $newSoalUjian['j2'] ?? null;
+        $soalUjian->j3 = $newSoalUjian['j3'] ?? null;
+        $soalUjian->j4 = $newSoalUjian['j4'] ?? null;
+        $soalUjian->j5 = $newSoalUjian['j5'] ?? null;
+        $soalUjian->j6 = $newSoalUjian['j6'] ?? null;
+        $soalUjian->j7 = $newSoalUjian['j7'] ?? null;
+        $soalUjian->j8 = $newSoalUjian['j8'] ?? null;
+        $soalUjian->j9 = $newSoalUjian['j9'] ?? null;
+        $soalUjian->j10 = $newSoalUjian['j10'] ?? null;
+        $soalUjian->id_guru = $userPendidikan->id_guru;
+        $soalUjian->id_data_ujian = $id_data_ujian;
+        $soalUjian->save();
+
+        return 'ok';
+    }
+
+
+    /**
      * batalakan pertanyaan dan hapus dari database
      */
     public function pertanyaanDel(Request $request, $username, $pass, $id_data_ujian) {
@@ -400,5 +431,6 @@ class RegishController extends Controller
         }
 
         DataUjian::destroy($id_data_ujian);
+        return redirect('/soal/guru'.'/'.$username.'/'.$pass);
     }
 }
