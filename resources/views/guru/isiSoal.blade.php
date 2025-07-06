@@ -29,12 +29,34 @@
             color: #A0C878;
             font-weight: bold;
         }
-        .profile-card {
+        .question-card {
             border-left: 4px solid #A0C878;
+            margin-bottom: 20px;
         }
-        .data-label {
-            font-weight: 600;
-            color: #495057;
+        .form-label {
+            font-weight: 500;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .option-item input[type="radio"] {
+            margin-right: 10px;
+        }
+        .add-option-btn {
+            color: #A0C878;
+            cursor: pointer;
+        }
+        .remove-option-btn {
+            color: #dc3545;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .question-actions {
+            border-top: 1px solid #dee2e6;
+            padding-top: 15px;
+            margin-top: 15px;
         }
     </style>
 
@@ -101,7 +123,7 @@
                         <button type="button" class="btn btn-success" id="addQuestionBtn" style="background-color: #A0C878; border-color: #A0C878;">
                             <i class="fas fa-plus me-1"></i> Tambah Pertanyaan
                         </button>
-                        <a href="/soal/guru/{{$username}}/{{$pass}}/{{$id_data_ujian}}" class="btn btn-danger" id="addQuestionBtn">
+                        <a href="/soal/guru/{{$username}}/{{$pass}}/{{$id_data_ujian}}" class="btn btn-danger" id="delQuestionBtn">
                             <i class="fas fa-trash me-1"></i> Hapus Semua Perubahan
                         </a>
                     </div>
@@ -163,6 +185,7 @@
             </div>
         </div>
     </template>
+
     <!-- logika interaktif pertanyaan -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
