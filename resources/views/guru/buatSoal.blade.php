@@ -108,7 +108,7 @@
                                             
                                             <div class="col-md-6 mb-3">
                                                 <label for="subject" class="form-label">Pelajaran</label>
-                                                <select name="pelajaran" class="form-select" id="subject" required>
+                                                <select name="id_pelajaran" class="form-select" id="subject" required>
                                                     <option value="" selected disabled>Pilih Pelajaran</option>
                                                     @foreach ($pelajarans as $pelajaran)
                                                         <option value="{{$pelajaran->id_pelajaran}}">{{$pelajaran->nama_pelajaran}}</option>
@@ -119,23 +119,23 @@
                                         
                                         <div class="mb-3">
                                             <label for="examDescription" class="form-label">Penjelasan Ujian</label>
-                                            <textarea name="deskripsi_ujian" class="form-control" id="examDescription" rows="3"></textarea>
+                                            <textarea name="penjelasan_ujian" class="form-control" id="examDescription" rows="3"></textarea>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="duration" class="form-label">Durasi Ujian (menit)</label>
-                                                <input name="durasi" type="number" class="form-control" id="duration" min="1" required>
+                                                <input name="durasi_ujian" type="number" class="form-control" id="duration" min="1" required>
                                             </div>
                                             
                                             <div class="col-md-4 mb-3">
                                                 <label for="openTime" class="form-label">Ujian Dibuka</label>
-                                                <input name="tanggal_ujian_dibuka" type="datetime-local" class="form-control" id="openTime" required>
+                                                <input name="ujian_dibuka" type="datetime-local" class="form-control" id="openTime" required>
                                             </div>
                                             
                                             <div class="col-md-4 mb-3">
                                                 <label for="closeTime" class="form-label">Ujian Ditutup</label>
-                                                <input name="tanggal_ujian_ditutup" type="datetime-local" class="form-control" id="closeTime" required>
+                                                <input name="ujian_ditutup" type="datetime-local" class="form-control" id="closeTime" required>
                                             </div>
                                         </div>
                                         
