@@ -355,9 +355,31 @@ class RegishController extends Controller
 
 
     /**
-     * simpan data soal yang sudah di buat guru
+     * simpan data soal yang sudah di buat guru lalu tampilkan pembuatan pertanyaan
      */
     public function soalNew(Request $request, $username, $pass) {
+        $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+        if ($userPendidikan->peran == 'guru') {
+            $dataPribadi = Guru::where('id_guru', $userPendidikan->id_guru)->firstOrFail();
 
+            $requestDataUjian = $request->all();
+            $dataUjian = new DataUjian();
+            $dataUjian->nama_ujian = $requestDataUjian['nama_ujian'];
+            $dataUjian->penjelasan_ujian = $requestDataUjian['penjelasan_ujian'];
+            $dataUjian->durasi_ujian = $requestDataUjian['durasi_ujian'];
+            $dataUjian->ujian_dibuka = Carbon::parse($requestDataUjian['ujian_dibuka']);
+            $dataUjian->ujian_ditutup = Carbon::parse($requestDataUjian['ujian_ditutup']);
+            $dataUjian->id_pelajaran = $requestDataUjian['id_pelajaran'];
+            $dataUjian->save();
+
+            return view('guru.isiSoal', [
+                'username' => $username,
+                'pass' => $pass,
+                'id_data_ujian' => $dataUjian->id_data_ujian
+            ]);
+
+        } else {
+            throw new QueryException();
+        }
     }
 }
