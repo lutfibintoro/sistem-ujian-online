@@ -154,14 +154,14 @@
                         <label class="form-label">Jawaban</label>
                         <div class="options-container">
                             <!-- <div class="option-item">
-                                <input value="op1" type="radio" name="option" class="form-check-input">
+                                <input value="1" type="radio" name="option" class="form-check-input">
                                 <input type="text" name="j1" class="form-control option-text" placeholder="Jawaban 1">
                                 <button type="button" class="btn btn-sm remove-option-btn">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
                             <div class="option-item">
-                                <input value="op2" type="radio" name="option" class="form-check-input">
+                                <input value="2" type="radio" name="option" class="form-check-input">
                                 <input type="text" name="j2" class="form-control option-text" placeholder="Jawaban 2">
                                 <button type="button" class="btn btn-sm remove-option-btn">
                                     <i class="fas fa-times"></i>
@@ -256,7 +256,7 @@
                     const newOption = document.createElement('div');
                     newOption.className = 'option-item';
                     newOption.innerHTML = `
-                        <input value="op${optionCount + 1}" type="radio" name="option" class="form-check-input">
+                        <input value="${optionCount + 1}" type="radio" name="option" class="form-check-input">
                         <input type="text" name="j${optionCount + 1}" class="form-control option-text" placeholder="Jawaban ${optionCount + 1}">
                         <button type="button" class="btn btn-sm remove-option-btn">
                             <i class="fas fa-times"></i>
@@ -280,7 +280,7 @@
                             inputText.name = `j${i + 1}`;
 
                             const radioInput = ooptionItems[i].querySelector('.form-check-input');
-                            radioInput.value = `op${i + 1}`;
+                            radioInput.value = `${i + 1}`;
                         }
                     });
 
@@ -293,7 +293,7 @@
                         inputText.name = `j${i + 1}`;
 
                         const radioInput = optionItems[i].querySelector('.form-check-input');
-                        radioInput.value = `op${i + 1}`;
+                        radioInput.value = `${i + 1}`;
                     }
                 });
                 
