@@ -101,7 +101,7 @@
                         <button type="button" class="btn btn-success" id="addQuestionBtn" style="background-color: #A0C878; border-color: #A0C878;">
                             <i class="fas fa-plus me-1"></i> Tambah Pertanyaan
                         </button>
-                        <a href="/soal/guru/{{$username}}/{{$pass}}" class="btn btn-danger" id="addQuestionBtn">
+                        <a href="/soal/guru/{{$username}}/{{$pass}}/{{$id_data_ujian}}" class="btn btn-danger" id="addQuestionBtn">
                             <i class="fas fa-trash me-1"></i> Hapus Semua Perubahan
                         </a>
                     </div>
