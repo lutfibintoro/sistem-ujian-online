@@ -382,4 +382,23 @@ class RegishController extends Controller
             throw new QueryException();
         }
     }
+
+
+    /**
+     * batalakan pertanyaan dan hapus dari database
+     */
+    public function pertanyaanDel(Request $request, $username, $pass, $id_data_ujian) {
+        
+        $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+        if (!$userPendidikan->peran == 'guru') {
+            throw new QueryException();
+        }
+
+        $soalGuru = SoalUjian::where('id_guru', $userPendidikan->id_guru)->where('id_data_ujian', $id_data_ujian)->exists();
+        if (!$soalGuru) {
+            return redirect('/soal/guru'.'/'.$username.'/'.$pass);
+        }
+
+        DataUjian::destroy($id_data_ujian);
+    }
 }
