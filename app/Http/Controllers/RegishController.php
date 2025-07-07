@@ -370,8 +370,12 @@ class RegishController extends Controller
             $dataUjian->ujian_dibuka = Carbon::parse($requestDataUjian['ujian_dibuka']);
             $dataUjian->ujian_ditutup = Carbon::parse($requestDataUjian['ujian_ditutup']);
             $dataUjian->id_pelajaran = $requestDataUjian['id_pelajaran'];
+            
+            if ($requestDataUjian['ujian_ditutup'] < $requestDataUjian['ujian_dibuka']) {
+                return redirect('/soal/guru'.'/'.$username.'/'.$pass);;
+            }
+            
             $dataUjian->save();
-
             return view('guru.isiSoal', [
                 'username' => $username,
                 'pass' => $pass,
@@ -458,6 +462,7 @@ class RegishController extends Controller
                                         'guru.nama as nama',
                                         'guru.kontak as kontak',
                                         'guru.email as email')
+                                    ->where('user_pendidikan.username', $username)->where('user_pendidikan.pass', $pass)
                                     ->distinct()->get()->toArray();
 
             foreach ($infos as &$info) {
