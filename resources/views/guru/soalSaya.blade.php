@@ -29,12 +29,50 @@
             color: #A0C878;
             font-weight: bold;
         }
-        .profile-card {
+        .exam-info-card {
             border-left: 4px solid #A0C878;
         }
-        .data-label {
-            font-weight: 600;
+        .info-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .info-section h5 {
+            color: #A0C878;
+            border-bottom: 2px solid #DDEB9D;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        .info-item {
+            margin-bottom: 15px;
+        }
+        .info-label {
+            font-weight: bolder;
             color: #495057;
+            min-width: 100px;
+            display: inline-block;
+        }
+        .access-code {
+            background-color: #f8f9fa;
+            border: 2px dashed #A0C878;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        .badge-duration {
+            background-color: #A0C878;
+        }
+        .exam-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #DDEB9D;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
     </style>
 
@@ -47,17 +85,17 @@
                     <hr>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/dashboard/{{$username}}/{{$pass}}">
                                 <i class="fas fa-home me-2"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/profil/{{$username}}/{{$pass}}">
                                 <i class="fas fa-user me-2"></i> Edit Profil
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/soal/guru/{{$username}}/{{$pass}}">
                                 <i class="fas fa-plus-circle me-2"></i> Buat Soal
                             </a>
                         </li>

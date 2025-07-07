@@ -62,7 +62,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/list/guru/{{$username}}/{{$pass}}">
                                 <i class="fas fa-list me-2"></i> Soal Saya
                             </a>
                         </li>

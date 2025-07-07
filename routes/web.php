@@ -32,3 +32,7 @@ Route::get('/soal/guru/{username}/{pass}', [RegishController::class, 'soalNewMet
 Route::post('/soal/guru/{username}/{pass}', [RegishController::class, 'soalNew']);
 Route::post('/soal/guru/{username}/{pass}/{id_data_ujian}', [RegishController::class, 'pertanyaanNew']);
 Route::get('/soal/guru/{username}/{pass}/{id_data_ujian}', [RegishController::class, 'pertanyaanDel']);
+
+
+//route guru list soal
+Route::get('/list/guru/{username}/{pass}', [RegishController::class, 'soalSaya']);
