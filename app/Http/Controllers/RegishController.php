@@ -433,4 +433,60 @@ class RegishController extends Controller
         DataUjian::destroy($id_data_ujian);
         return redirect('/soal/guru'.'/'.$username.'/'.$pass);
     }
+
+
+    /**
+     * tampilkan halaman list soal untuk guru
+     */
+    public function soalSaya($username, $pass) {
+        $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+        if ($userPendidikan->peran == 'guru') {
+            $dataPribadi = Guru::where('id_guru', $userPendidikan->id_guru)->firstOrFail();
+
+            $infos = UserPendidikan::join('guru', 'user_pendidikan.id_guru', '=', 'guru.id_guru')
+                                    ->join('soal_ujian', 'guru.id_guru', '=', 'soal_ujian.id_guru')
+                                    ->join('data_ujian', 'soal_ujian.id_data_ujian', '=', 'data_ujian.id_data_ujian')
+                                    ->join('pelajaran', 'data_ujian.id_pelajaran', '=', 'pelajaran.id_pelajaran')
+                                    ->select(
+                                        'data_ujian.nama_ujian as nama_ujian',
+                                        'data_ujian.durasi_ujian as durasi_ujian',
+                                        'data_ujian.penjelasan_ujian as penjelasan_ujian',
+                                        'data_ujian.ujian_dibuka as ujian_dibuka',
+                                        'data_ujian.ujian_ditutup as ujian_ditutup',
+                                        'data_ujian.id_data_ujian as id_data_ujian',
+                                        'pelajaran.nama_pelajaran as nama_pelajaran',
+                                        'guru.nama as nama',
+                                        'guru.kontak as kontak',
+                                        'guru.email as email')
+                                    ->distinct()->get()->toArray();
+
+            foreach ($infos as &$info) {
+                $panjang = SoalUjian::where('id_data_ujian', $info['id_data_ujian'])->count();
+                $info['panjang'] = $panjang;
+
+                if (now() < $info['ujian_dibuka']) {
+                    $info['status'] = 'warning';
+                    $info['status_ujian'] = 'Belum Aktif';
+
+                } elseif ((now() > $info['ujian_dibuka']) && (now() < $info['ujian_ditutup'])) {
+                    $info['status'] = 'success';
+                    $info['status_ujian'] = 'Aktif';
+
+                } else {
+                    $info['status'] = 'danger';
+                    $info['status_ujian'] = 'Tidak Aktif';
+
+                }
+            }
+
+            return view('guru.soalSaya', [
+                'username' => $username,
+                'pass' => $pass,
+                'infos' => $infos
+            ]);
+
+        } else {
+            throw new QueryException();
+        }
+    }
 }

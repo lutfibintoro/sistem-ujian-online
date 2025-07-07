@@ -115,7 +115,7 @@
 
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 ms-sm-auto main-content">
-                <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4 shadow-sm">
+                <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
                     <div class="container-fluid">
                         <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
                             <span class="navbar-toggler-icon"></span>
@@ -128,31 +128,32 @@
                 </nav>
 
                 <div class="container-fluid">
+
+                    <script>
+                        // Fungsi untuk copy kode akses
+                        function salinKode(id) {
+                            const kode = document.getElementById(id).innerText;
+                            navigator.clipboard.writeText(kode).then(() => alert("Teks berhasil disalin: " + kode)).catch(err => alert("gagal: " + err));
+                        }
+                    </script>
+
                     <!-- Informasi Ujian -->
-                    <div class="card shadow exam-info-card">
-                        <div class="card-header bg-white">
-                            <h4 class="card-title mb-0"><i class="fas fa-info-circle me-2"></i>Informasi Ujian</h4>
-                        </div>
+                    @foreach($infos as $info)
+                        <div class="card shadow exam-info-card mt-4">
+                            <div class="card-header bg-white">
+                                <h4 class="card-title mb-0"><i class="fas fa-info-circle me-2"></i>Informasi Ujian</h4>
+                            </div>
 
-                        <script>
-                            // Fungsi untuk copy kode akses
-                            function salinKode(id) {
-                                const kode = document.getElementById(id).innerText;
-                                navigator.clipboard.writeText(kode).then(() => alert("Teks berhasil disalin: " + kode)).catch(err => alert("gagal: " + err));
-                            }
-                        </script>
-
-                        @foreach($infos as $info)
                             <div class="card-body">
                                 <!-- Judul Ujian dan Info Utama -->
                                 <div class="mb-4">
-                                    <h3 class="exam-title">{{$info->nama_ujian}}</h3>
+                                    <h3 class="exam-title">{{$info['nama_ujian']}}</h3>
                                     <div class="d-flex flex-wrap gap-2 mb-3">
                                         <span class="badge badge-duration text-white">
-                                            <i class="fas fa-clock me-1"></i> Durasi: {{$info->durasi_ujian}} menit
+                                            <i class="fas fa-clock me-1"></i> Durasi: {{$info['durasi_ujian']}} menit
                                         </span>
                                         <span class="badge bg-primary">
-                                            <i class="fas fa-question-circle me-1"></i> Jumlah Pertanyaan: {{$info->panjang}}
+                                            <i class="fas fa-question-circle me-1"></i> Jumlah Pertanyaan: {{$info['panjang']}}
                                         </span>
                                     </div>
                                 </div>
@@ -166,11 +167,11 @@
                                             <h5><i class="fas fa-book-open me-2"></i>Mata Pelajaran</h5>
                                             <div class="info-item">
                                                 <span class="info-label">Nama:</span><br>
-                                                <span>{{$info->nama_pelajaran}}</span>
+                                                <span>{{$info['nama_pelajaran']}}</span>
                                             </div>
                                             <div class="info-item">
                                                 <span class="info-label">Deskripsi:</span><br>
-                                                <span>{{$info->penjelasan_ujian}}</span>
+                                                <span>{{$info['penjelasan_ujian']}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -181,15 +182,15 @@
                                             <h5><i class="fas fa-calendar-alt me-2"></i>Jadwal Ujian</h5>
                                             <div class="info-item">
                                                 <span class="info-label">Dibuka:</span><br>
-                                                <span>{{$info->ujian_dibuka}}</span>
+                                                <span>{{$info['ujian_dibuka']}}</span>
                                             </div>
                                             <div class="info-item">
                                                 <span class="info-label">Ditutup:</span><br>
-                                                <span>{{$info->ujian_ditutup}}</span>
+                                                <span>{{$info['ujian_ditutup']}}</span>
                                             </div>
                                             <div class="info-item">
                                                 <span class="info-label">Status:</span><br>
-                                                <span class="badge bg-{{$info->status}}">{{$info->status_ujian}}</span>
+                                                <span class="badge bg-{{$info['status']}}">{{$info['status_ujian']}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -200,15 +201,15 @@
                                             <h5><i class="fas fa-user-tie me-2"></i>Pembuat Ujian</h5>
                                             <div class="info-item">
                                                 <span class="info-label">Nama:</span><br>
-                                                <span>{{$info->nama}}</span>
+                                                <span>{{$info['nama']}}</span>
                                             </div>
                                             <div class="info-item">
                                                 <span class="info-label">Kontak:</span><br>
-                                                <span>{{$info->kontak}}</span>
+                                                <span>{{$info['kontak']}}</span>
                                             </div>
                                             <div class="info-item">
                                                 <span class="info-label">Email:</span><br>
-                                                <span>{{$info->email}}</span>
+                                                <span>{{$info['email']}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -218,10 +219,10 @@
                                 <div class="text-center">
                                     <h5 class="mb-3"><i class="fas fa-key me-2"></i>Kode Akses Ujian</h5>
                                     <div class="access-code">
-                                        <div id="kode-soal-{{$info->id_data_ujian}}">{{$info->id_data_ujian}}</div>
+                                        <div id="kode-soal-{{$info['id_data_ujian']}}">{{$info['id_data_ujian']}}</div>
                                         <small class="text-muted">Beri kode ini ke murid untuk mengerjakan soal</small>
                                     </div>
-                                    <button class="btn btn-outline-secondary mt-2" onclick="salinKode('kode-soal-{{$info->id_data_ujian}}')">
+                                    <button class="btn btn-outline-secondary mt-2" onclick="{{ 'salinKode(\'kode-soal-' . $info['id_data_ujian'] . '\')' }}">
                                         <i class="fas fa-copy me-1"></i> Salin Kode
                                     </button>
                                 </div>
@@ -239,24 +240,24 @@
                                     </div>
                                 </div> -->
                             </div>
-                        @endforeach
-
-                        <div class="card-footer bg-white">
-                            <div class="d-flex justify-content-between">
-                                <!-- <button class="btn btn-secondary">
-                                    <i class="fas fa-arrow-left me-1"></i> Kembali
-                                </button>
-                                <div>
-                                    <button class="btn btn-outline-primary me-2">
-                                        <i class="fas fa-edit me-1"></i> Edit Ujian
+                            
+                            <div class="card-footer bg-white">
+                                <div class="d-flex justify-content-between">
+                                    <!-- <button class="btn btn-secondary">
+                                        <i class="fas fa-arrow-left me-1"></i> Kembali
                                     </button>
-                                    <button class="btn btn-success" style="background-color: #A0C878; border-color: #A0C878;">
-                                        <i class="fas fa-file-export me-1"></i> Ekspor Data
-                                    </button>
-                                </div> -->
+                                    <div>
+                                        <button class="btn btn-outline-primary me-2">
+                                            <i class="fas fa-edit me-1"></i> Edit Ujian
+                                        </button>
+                                        <button class="btn btn-success" style="background-color: #A0C878; border-color: #A0C878;">
+                                            <i class="fas fa-file-export me-1"></i> Ekspor Data
+                                        </button>
+                                    </div> -->
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
