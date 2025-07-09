@@ -47,12 +47,12 @@
                     <hr>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/dashboard/{{$username}}/{{$pass}}">
                                 <i class="fas fa-home me-2"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/profil/{{$username}}/{{$pass}}">
                                 <i class="fas fa-user me-2"></i> Edit Profil
                             </a>
                         </li>
@@ -62,7 +62,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/list/siswa/{{$username}}/{{$pass}}">
                                 <i class="fas fa-list me-2"></i> Soal Selesai
                             </a>
                         </li>

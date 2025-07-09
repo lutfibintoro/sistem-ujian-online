@@ -57,12 +57,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/kode/siswa/{{$username}}/{{$pass}}">
                                 <i class="fas fa-solid fa-pen-to-square me-2"></i> Kerjakan Soal
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/list/siswa/{{$username}}/{{$pass}}">
                                 <i class="fas fa-list me-2"></i> Soal Selesai
                             </a>
                         </li>

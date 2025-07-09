@@ -47,17 +47,17 @@
                     <hr>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="/dashboard/{{$username}}/{{$pass}}">
                                 <i class="fas fa-home me-2"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/profil/{{$username}}/{{$pass}}">
                                 <i class="fas fa-user me-2"></i> Edit Profil
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/kode/siswa/{{$username}}/{{$pass}}">
                                 <i class="fas fa-solid fa-pen-to-square me-2"></i> Kerjakan Soal
                             </a>
                         </li>
