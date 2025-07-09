@@ -36,3 +36,16 @@ Route::get('/soal/guru/{username}/{pass}/{id_data_ujian}', [RegishController::cl
 
 //route guru list soal
 Route::get('/list/guru/{username}/{pass}', [RegishController::class, 'soalSaya']);
+
+
+// route siswa list soal
+Route::get('/list/siswa/{username}/{pass}', [RegishController::class, 'listSelesai']); // return halaman list
+
+
+// route siswa memasukkan halaman kode soal
+Route::get('/kode/siswa/{username}/{pass}', [RegishController::class, 'inputKodeSoal']); // return halaman kode soal
+Route::post('/soal/siswa/{username}/{pass}', [RegishController::class, 'postKodeSoal']); // return halaman soal
+
+
+// route siswa mengirim jawaban soal
+Route::post('/soal/siswa/{username}/{pass}/submit', [RegishController::class, 'jaawbanSoal']); // return halaman list
