@@ -102,7 +102,7 @@
                             <i class="fas fa-key me-2"></i> Masukkan Kode Ujian
                         </a>
                         <div class="d-flex align-items-center">
-                            <span class="me-3 d-none d-sm-block"><strong>Andi Santoso</strong></span>
+                            <span class="me-3 d-none d-sm-block"><strong>{{$username}}</strong></span>
                         </div>
                     </div>
                 </nav>
@@ -114,12 +114,10 @@
                                 <h3 class="mb-4"><i class="fas fa-key me-2"></i> Masukkan Kode Ujian</h3>
                                 <p class="text-muted mb-4">Silakan masukkan kode akses yang diberikan oleh guru/pengajar</p>
                                 
-                                <form id="codeForm">
+                                <form id="codeForm" action="/soal/siswa/{{$username}}/{{$pass}}" method="post">
+                                    @csrf
                                     <div class="mb-4">
-                                        <input type="number" class="form-control form-control-lg code-input" 
-                                               placeholder="XXXX" required 
-                                               pattern="[A-Za-z0-9]{4}-[A-Za-z0-9]{4}"
-                                               title="Format kode: XXXX (angka)">
+                                        <input type="number" class="form-control form-control-lg code-input" placeholder="XXXX" name="kode" required>
                                     </div>
                                     
                                     <div class="d-grid">
