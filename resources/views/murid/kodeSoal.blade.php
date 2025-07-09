@@ -4,9 +4,6 @@
     <style>
         body {
             background-color: #f8f9fa;
-            height: 100vh;
-            display: flex;
-            align-items: center;
         }
         .sidebar {
             min-height: 100vh;
@@ -63,7 +60,7 @@
                     <hr>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/dashboard/{{$username}}/{{$pass}}">
+                            <a class="nav-link" href="/dashboard/{{$username}}/{{$pass}}">
                                 <i class="fas fa-home me-2"></i> Dashboard
                             </a>
                         </li>
