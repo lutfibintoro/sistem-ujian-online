@@ -191,12 +191,6 @@
                                             <div class="info-item">
                                                 <span class="info-label">Status:</span><br>
                                                 <span class="badge bg-{{$info['status']}}">{{$info['status_ujian']}}</span>
-<span class="badge bg-{{$info['status']}}">
-    {{$info['status_ujian']}}<br>
-    Sekarang: {{ now() }}<br>
-    Dibuka: {{ $info['ujian_dibuka'] }}<br>
-    Ditutup: {{ $info['ujian_ditutup'] }}
-</span>
                                             </div>
                                         </div>
                                     </div>
