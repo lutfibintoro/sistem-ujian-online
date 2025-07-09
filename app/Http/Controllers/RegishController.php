@@ -469,11 +469,14 @@ class RegishController extends Controller
                 $panjang = SoalUjian::where('id_data_ujian', $info['id_data_ujian'])->count();
                 $info['panjang'] = $panjang;
 
-                if (now() < $info['ujian_dibuka']) {
+                $dibuka = Carbon::parse($info['ujian_dibuka']);
+                $ditutup = Carbon::parse($info['ujian_ditutup']);
+
+                if (now() < $dibuka) {
                     $info['status'] = 'warning';
                     $info['status_ujian'] = 'Belum Aktif';
 
-                } elseif ((now() > $info['ujian_dibuka']) && (now() < $info['ujian_ditutup'])) {
+                } elseif ((now() > $dibuka) && (now() < $ditutup)) {
                     $info['status'] = 'success';
                     $info['status_ujian'] = 'Aktif';
 
