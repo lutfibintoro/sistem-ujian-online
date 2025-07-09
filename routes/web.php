@@ -48,4 +48,4 @@ Route::post('/soal/siswa/{username}/{pass}', [RegishController::class, 'postKode
 
 
 // route siswa mengirim jawaban soal
-Route::post('/soal/siswa/{username}/{pass}/submit', [RegishController::class, 'jaawbanSoal']); // return kode soal
+Route::post('/soal/siswa/{username}/{pass}/{id_soal_ujian}', [RegishController::class, 'jawabanSoal']); // return kode soal
