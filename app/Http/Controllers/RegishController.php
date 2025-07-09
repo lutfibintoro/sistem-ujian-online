@@ -376,7 +376,8 @@ class RegishController extends Controller
             }
             
             $dataUjian->save();
-            return view('guru.isiSoal', [
+            return view('guru.isiSoal',
+            [
                 'username' => $username,
                 'pass' => $pass,
                 'id_data_ujian' => $dataUjian->id_data_ujian
@@ -493,6 +494,23 @@ class RegishController extends Controller
                 'infos' => $infos
             ]);
 
+        } else {
+            throw new QueryException();
+        }
+    }
+
+
+    /**
+     * halaman input kode soal bagi mahasiswa
+     */
+    public function inputKodeSoal($username, $pass) {
+        $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+        if ($userPendidikan->peran == 'siswa') {
+            return view('murid.kodeSoal',
+            [
+                'username' => $username,
+                'pass' => $pass
+            ]);
         } else {
             throw new QueryException();
         }
