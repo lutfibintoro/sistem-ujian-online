@@ -99,7 +99,7 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <a class="navbar-brand" href="#">
-                            <i class="fas fa-key me-2"></i> Masukkan Kode Ujian
+                            <i class="fas fa-key me-2"></i> Masukkan Kode Soal
                         </a>
                         <div class="d-flex align-items-center">
                             <span class="me-3 d-none d-sm-block"><strong>{{$username}}</strong></span>
@@ -111,7 +111,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-6">
                             <div class="code-container text-center">
-                                <h3 class="mb-4"><i class="fas fa-key me-2"></i> Masukkan Kode Ujian</h3>
+                                <h3 class="mb-4"><i class="fas fa-key me-2"></i> Masukkan Kode Soal</h3>
                                 <p class="text-muted mb-4">Silakan masukkan kode akses yang diberikan oleh guru/pengajar</p>
                                 
                                 <form id="codeForm" action="/soal/siswa/{{$username}}/{{$pass}}" method="post">
