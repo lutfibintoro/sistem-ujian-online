@@ -171,12 +171,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Set menu aktif (sesuaikan dengan kebutuhan)
-            document.querySelectorAll('.nav-link').forEach(link => {
-                if(link.querySelector('.fa-sign-out-alt')) {
-                    link.classList.add('active');
-                }
-            });
 
             // Timer countdown
             function startTimer(duration, display) {
