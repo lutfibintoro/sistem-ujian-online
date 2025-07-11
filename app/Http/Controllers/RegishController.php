@@ -15,6 +15,7 @@ use App\Models\Pengerjaan;
 use App\Models\Siswa;
 use App\Models\SoalUjian;
 use App\Models\UserPendidikan;
+use Illuminate\Support\Arr;
 
 class RegishController extends Controller
 {
@@ -511,6 +512,61 @@ class RegishController extends Controller
                 'username' => $username,
                 'pass' => $pass
             ]);
+        } else {
+            throw new QueryException();
+        }
+    }
+
+
+    /**
+     * halaman mengerjakan soal bagi murids murids
+     */
+    public function postKodeSoal(Request $request, $username, $pass) {
+        $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+        if ($userPendidikan->peran == 'siswa') {
+            $kode = $request->only(['kode']);
+            
+            $adakahData = SoalUjian::where('id_data_ujian', $kode['kode'])->exists();
+            if (!$adakahData) {
+                return redirect('/kode/siswa'.'/'.$username.'/'.$pass);
+            }
+            
+            $data = DataUjian::where('id_data_ujian', $kode['kode'])->firstOrFail();
+            $dataPelajaran = Pelajaran::where('id_pelajaran', $data->id_pelajaran)->firstOrFail();
+            
+            $soals = SoalUjian::select('pertanyaan', 'id_soal_ujian')->where('id_data_ujian', $kode['kode'])->get()->toArray();
+            $tempSoal = SoalUjian::select('j1', 'j2', 'j3', 'j4', 'j5', 'j6', 'j7', 'j8', 'j9', 'j10')->where('id_data_ujian', $kode['kode'])->get()->toArray();
+            
+            for ($i=0; $i < count($soals); $i++) { 
+                $soals[$i]['nomer_soal'] = $i + 1;
+                $soal = [];
+                
+                for ($j=1; $j <= 10; $j++) { 
+                    if ($tempSoal[$i]['j'.$j] !== null) {
+                        $soal[] =
+                        [
+                            'jawaban' => $j,
+                            'jawaban_text' => $tempSoal[$i]['j'.$j]
+                        ];
+                    }
+                }
+                
+                $soals[$i]['opsi'] = Arr::shuffle($soal);
+            }
+            
+
+            return view('murid.kerjaSoal',
+            [
+                'username' => $username,
+                'pass' => $pass,
+                'nama_pelajaran' => $dataPelajaran->nama_pelajaran,
+                'nama_ujian' => $data->nama_ujian,
+                'penjelasan_ujian' => $data->penjelasan_ujian,
+                'soals' => $soals,
+                'id_soal_ujian' => $soals[0]['id_soal_ujian'],
+                'durasi_ujian' => $data['durasi_ujian']
+            ]);
+            
         } else {
             throw new QueryException();
         }
