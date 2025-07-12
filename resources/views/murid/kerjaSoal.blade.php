@@ -144,6 +144,7 @@
                     <!-- Daftar Pertanyaan -->
                     <form id="examForm" method="post" action="/soal/siswa/{{$username}}/{{$pass}}/submit">
                         @csrf
+                        <input type="hidden" id="waktu-mulai" name="waktu-mulai" value="{{$waktu_mulai}}">
                         @foreach($soals as $soal)
                             <div class="question-container">
                                 <h5><span class="question-number">{{$soal['nomer_soal']}}. </span>{{$soal['pertanyaan']}}</h5>
