@@ -142,11 +142,12 @@
                     </div>
 
                     <!-- Daftar Pertanyaan -->
-                    <form id="examForm" method="post" action="/soal/siswa/{{$username}}/{{$pass}}/{{$id_soal_ujian}}}">
+                    <form id="examForm" method="post" action="/soal/siswa/{{$username}}/{{$pass}}/submit">
                         @csrf
                         @foreach($soals as $soal)
                             <div class="question-container">
                                 <h5><span class="question-number">{{$soal['nomer_soal']}}. </span>{{$soal['pertanyaan']}}</h5>
+                                <input type="hidden" id="soal-id-{{$soal['nomer_soal']}}" name="soal-id-{{$soal['nomer_soal']}}" value="{{$soal['id_soal_ujian']}}">
                                 <div class="options mt-3">
                                     @foreach($soal['opsi'] as $option)
                                         <div class="option-item form-check">

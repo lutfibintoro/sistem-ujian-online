@@ -16,6 +16,7 @@ use App\Models\Siswa;
 use App\Models\SoalUjian;
 use App\Models\UserPendidikan;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class RegishController extends Controller
 {
@@ -563,7 +564,6 @@ class RegishController extends Controller
                 'nama_ujian' => $data->nama_ujian,
                 'penjelasan_ujian' => $data->penjelasan_ujian,
                 'soals' => $soals,
-                'id_soal_ujian' => $soals[0]['id_soal_ujian'],
                 'durasi_ujian' => $data['durasi_ujian']
             ]);
             
