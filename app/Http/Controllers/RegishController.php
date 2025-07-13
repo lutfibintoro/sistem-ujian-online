@@ -503,6 +503,64 @@ class RegishController extends Controller
 
 
     /**
+     * kembalikan halaman informasi soalyang telah diselesaikan murid
+     */
+    public function listSelesai($username, $pass) {
+        $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+        if ($userPendidikan->peran == 'siswa') {
+            $infos = UserPendidikan::join('siswa', 'user_pendidikan.id_siswa', '=', 'siswa.id_siswa')
+                                   ->join('pengerjaan', 'pengerjaan.id_siswa', '=', 'siswa.id_siswa')
+                                   ->join('soal_ujian', 'soal_ujian.id_soal_ujian', '=', 'pengerjaan.id_soal_ujian')
+                                   ->join('guru', 'guru.id_guru', '=', 'soal_ujian.id_guru')
+                                   ->join('data_ujian', 'data_ujian.id_data_ujian', '=', 'soal_ujian.id_data_ujian')
+                                   ->join('pelajaran', 'pelajaran.id_pelajaran', '=', 'data_ujian.id_pelajaran')
+                                   ->select(
+                                        'data_ujian.durasi_ujian as durasi_ujian',
+                                        'data_ujian.nama_ujian as nama_ujian',
+                                        'data_ujian.penjelasan_ujian as penjelasan_ujian',
+                                        'data_ujian.ujian_dibuka as ujian_dibuka',
+                                        'data_ujian.ujian_ditutup as ujian_ditutup',
+                                        'data_ujian.id_data_ujian as id_data_ujian',
+                                        'pelajaran.nama_pelajaran as nama_pelajaran',
+                                        'guru.nama as nama',
+                                        'guru.kontak as kontak',
+                                        'guru.email as email')
+                                   ->where('user_pendidikan.username', $username)->where('user_pendidikan.pass', $pass)
+                                   ->distinct()->get()->toArray();
+
+            foreach ($infos as &$info) {
+                $jumlahPertanyaan = SoalUjian::where('id_data_ujian', $info['id_data_ujian'])->count();
+                $info['jumlah_pertanyaan'] = $jumlahPertanyaan;
+
+                $idSoalUjian = SoalUjian::where('id_data_ujian', $info['id_data_ujian'])->get()->toArray();
+                $totalBenar = 0;
+
+                foreach ($idSoalUjian as $id) {
+                    $benar = SoalUjian::join('pengerjaan', 'pengerjaan.id_soal_ujian', '=', 'soal_ujian.id_soal_ujian')
+                                      ->select('pengerjaan.jawaban', 'soal_ujian.jawaban')->where('soal_ujian.id_soal_ujian', $id['id_soal_ujian'])
+                                      ->whereColumn('pengerjaan.jawaban', 'soal_ujian.jawaban')->count();
+
+                    $totalBenar = $totalBenar + $benar;
+                }
+
+                $info['total_benar'] = $totalBenar.'/'.$jumlahPertanyaan;
+
+                $info['nilai'] = (100 / $jumlahPertanyaan) * $totalBenar;
+            }
+
+            return view('murid.selesaiSoal', [
+                'username' => $username,
+                'pass' => $pass,
+                'infos' => $infos
+            ]);
+
+        } else {
+            throw new QueryException();
+        }
+    }
+
+
+    /**
      * halaman input kode soal bagi mahasiswa
      */
     public function inputKodeSoal($username, $pass) {
