@@ -65,9 +65,6 @@
             margin: 25px 0;
             border-radius: 8px;
         }
-        .badge-duration {
-            background-color: #A0C878;
-        }
         .exam-title {
             color: #2c3e50;
             border-bottom: 2px solid #DDEB9D;
@@ -149,7 +146,7 @@
                                 <div class="mb-4">
                                     <h3 class="exam-title">{{$info['nama_ujian']}}</h3>
                                     <div class="d-flex flex-wrap gap-2 mb-3">
-                                        <span class="badge badge-duration text-white">
+                                        <span class="badge bg-success">
                                             <i class="fas fa-clock me-1"></i> Durasi: {{$info['durasi_ujian']}} menit
                                         </span>
                                         <span class="badge bg-primary">
