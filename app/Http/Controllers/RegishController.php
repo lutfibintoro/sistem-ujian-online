@@ -526,6 +526,16 @@ class RegishController extends Controller
         $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
         if ($userPendidikan->peran == 'siswa') {
             $kode = $request->only(['kode']);
+
+            $sudahSelesai = Pengerjaan::join('siswa', 'pengerjaan.id_siswa', '=', 'siswa.id_siswa')
+                                      ->join('user_pendidikan', 'user_pendidikan.id_siswa', '=', 'siswa.id_siswa')
+                                      ->join('soal_ujian', 'soal_ujian.id_soal_ujian', '=', 'pengerjaan.id_soal_ujian')
+                                      ->join('data_ujian', 'data_ujian.id_data_ujian', '=', 'soal_ujian.id_data_ujian')
+                                      ->where('user_pendidikan.username', $username)->where('user_pendidikan.pass', $pass)
+                                      ->where('data_ujian.id_data_ujian', $kode['kode'])->exists();
+            if ($sudahSelesai) {
+                return redirect('/kode/siswa'.'/'.$username.'/'.$pass);
+            }
             
             $adakahData = SoalUjian::where('id_data_ujian', $kode['kode'])->exists();
             if (!$adakahData) {
@@ -554,7 +564,11 @@ class RegishController extends Controller
                 
                 $soals[$i]['opsi'] = Arr::shuffle($soal);
             }
-            
+
+            $soalAcak = Arr::shuffle($soals);
+            for ($i=0; $i < count($soals); $i++) { 
+                $soalAcak[$i]['nomer_soal'] = $i + 1;
+            }
 
             return view('murid.kerjaSoal',
             [
@@ -563,10 +577,59 @@ class RegishController extends Controller
                 'nama_pelajaran' => $dataPelajaran->nama_pelajaran,
                 'nama_ujian' => $data->nama_ujian,
                 'penjelasan_ujian' => $data->penjelasan_ujian,
-                'soals' => $soals,
-                'durasi_ujian' => $data['durasi_ujian']
+                'soals' => $soalAcak,
+                'durasi_ujian' => $data['durasi_ujian'],
+                'waktu_mulai' => now()
             ]);
             
+        } else {
+            throw new QueryException();
+        }
+    }
+
+
+    /**
+     * simpan jawaban siswa ke basis data
+     */
+    public function jawabanSoal(Request $request, $username, $pass) {
+        $userPendidikan = UserPendidikan::where('username', $username)->where('pass', $pass)->firstOrFail();
+        if ($userPendidikan->peran == 'siswa') {
+
+            $data = $request->all();
+            $waktuMulai = $data['waktu-mulai'];
+            $idSiswa = UserPendidikan::where('username', $username)->firstOrFail()->id_siswa;
+            $idSoal = [];
+            $idSoalKey = 0;
+            $jawaban = [];
+            $jawabanKey = 0;
+
+            foreach ($data as $key => $value) {
+                if (Str::startsWith($key, 'soal-id-')) {
+                    $idSoal[$idSoalKey] = $value;
+                    $idSoalKey++;
+                }
+
+                if (Str::startsWith($key, 'question')) {
+                    $jawaban[$jawabanKey] = $value;
+                    $jawabanKey++;
+                }
+            }
+
+            // dd($waktuMulai, $idSiswa, $idSoal, $jawaban);
+            if (count($idSoal) !== count($jawaban)) {
+                throw new QueryException();
+            }
+
+            for ($i=0; $i < count($idSoal); $i++) { 
+                $pengerjaan = new Pengerjaan();
+                $pengerjaan->jawaban = $jawaban[$i];
+                $pengerjaan->id_soal_ujian = $idSoal[$i];
+                $pengerjaan->id_siswa = $idSiswa;
+                $pengerjaan->waktu_mulai = $waktuMulai;
+                $pengerjaan->save();
+            }
+
+            return redirect('/kode/siswa'.'/'.$username.'/'.$pass);
         } else {
             throw new QueryException();
         }
