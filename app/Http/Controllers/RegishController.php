@@ -543,6 +543,15 @@ class RegishController extends Controller
             }
             
             $data = DataUjian::where('id_data_ujian', $kode['kode'])->firstOrFail();
+
+            if (now() < $data->ujian_dibuka) {
+                return redirect('/kode/siswa'.'/'.$username.'/'.$pass);
+            }
+
+            if (now() > $data->ujian_ditutup) {
+                return redirect('/kode/siswa'.'/'.$username.'/'.$pass);
+            }
+
             $dataPelajaran = Pelajaran::where('id_pelajaran', $data->id_pelajaran)->firstOrFail();
             
             $soals = SoalUjian::select('pertanyaan', 'id_soal_ujian')->where('id_data_ujian', $kode['kode'])->get()->toArray();
